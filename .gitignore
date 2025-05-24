@@ -1,3 +1,5 @@
 .env
 .db.php
 .db.php
+db.php
+vendor/
