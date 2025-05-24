@@ -19,15 +19,24 @@ if ($result) {
     }
 }
 
+// Fetch judges for dropdown
+$judges = [];
+$result = $conn->query("SELECT id, display_name FROM judges");
+if ($result) {
+    while ($row = $result->fetch_assoc()) {
+        $judges[] = $row;
+    }
+}
+
 // Handle form submit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $judge_id = trim($_POST['judge_id']);
     $participant_id = trim($_POST['participant_id']);
-    $points = trim($_POST['points']);
+    $score = trim($_POST['points']); // Note: input field is still named 'points'
 
-    if ($judge_id == "" || $participant_id == "" || $points == "") {
+    if ($judge_id == "" || $participant_id == "" || $score == "") {
         $message = "Please fill in all fields.";
-    } elseif (!is_numeric($points) || $points < 1 || $points > 100) {
+    } elseif (!is_numeric($score) || $score < 1 || $score > 100) {
         $message = "Score must be between 1 and 100.";
     } else {
         // Prevent duplicate judge-participant scoring
@@ -39,8 +48,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($check->num_rows > 0) {
             $message = "This judge has already scored this participant.";
         } else {
-            $stmt = $conn->prepare("INSERT INTO scores (judge_id, participant_id, points) VALUES (?, ?, ?)");
-            $stmt->bind_param("iii", $judge_id, $participant_id, $points);
+            $stmt = $conn->prepare("INSERT INTO scores (judge_id, participant_id, score) VALUES (?, ?, ?)");
+            $stmt->bind_param("iii", $judge_id, $participant_id, $score);
             if ($stmt->execute()) {
                 $message = "Score submitted successfully!";
             } else {
@@ -52,6 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $check->close();
     }
 }
+
 $conn->close();
 ?>
 
@@ -72,8 +82,15 @@ $conn->close();
 
             <form method="post" action="">
                 <div class="mb-3">
-                    <label class="form-label">Judge ID</label>
-                    <input type="number" name="judge_id" class="form-control" required>
+                    <label class="form-label">Judge</label>
+                    <select name="judge_id" class="form-control" required>
+                        <option value="">Select a judge</option>
+                        <?php foreach ($judges as $judge): ?>
+                            <option value="<?php echo $judge['id']; ?>">
+                                <?php echo htmlspecialchars($judge['display_name']); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
                 </div>
 
                 <div class="mb-3">
@@ -99,3 +116,4 @@ $conn->close();
     </div>
 </body>
 </html>
+
