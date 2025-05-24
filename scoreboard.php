@@ -1,30 +1,22 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+require_once 'db.php';
 
-// DB connection
-
-require_once "db.php";
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-$scores = [];
+// Fetch participants with total scores
 $sql = "
-    SELECT p.name AS participant_name, SUM(s.score) AS total_score
+    SELECT p.id, p.name, COALESCE(SUM(s.score), 0) AS total_score
     FROM participants p
     LEFT JOIN scores s ON p.id = s.participant_id
-    GROUP BY p.id
+    GROUP BY p.id, p.name
     ORDER BY total_score DESC
 ";
 $result = $conn->query($sql);
+
+$participants = [];
 if ($result) {
     while ($row = $result->fetch_assoc()) {
-        $scores[] = $row;
+        $participants[] = $row;
     }
 }
-
 $conn->close();
 ?>
 
@@ -33,34 +25,49 @@ $conn->close();
 <head>
     <title>Public Scoreboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .gold { background-color: #ffd700 !important; }    /* Gold */
+        .silver { background-color: #c0c0c0 !important; }  /* Silver */
+        .bronze { background-color: #cd7f32 !important; }  /* Bronze */
+    </style>
+    <meta http-equiv="refresh" content="10"> <!-- Auto-refresh every 10 seconds -->
 </head>
 <body class="bg-light">
     <div class="container mt-5">
         <div class="card p-4 shadow-sm">
             <h2 class="mb-4">Public Scoreboard</h2>
-
-            <?php if (count($scores) > 0): ?>
-                <table class="table table-bordered table-striped">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>#</th>
-                            <th>Participant</th>
-                            <th>Total Score</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($scores as $index => $row): ?>
-                            <tr>
-                                <td><?php echo $index + 1; ?></td>
-                                <td><?php echo htmlspecialchars($row['participant_name']); ?></td>
-                                <td><?php echo $row['total_score'] ?? 0; ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            <?php else: ?>
-                <p class="text-muted">No scores have been submitted yet.</p>
-            <?php endif; ?>
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Rank</th>
+                        <th>Participant</th>
+                        <th>Total Points</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $rank = 1;
+                    foreach ($participants as $participant):
+                        $class = '';
+                        if ($rank === 1) $class = 'gold';
+                        elseif ($rank === 2) $class = 'silver';
+                        elseif ($rank === 3) $class = 'bronze';
+                    ?>
+                    <tr class="<?php echo $class; ?>">
+                        <td><?php echo $rank; ?></td>
+                        <td><?php echo htmlspecialchars($participant['name']); ?></td>
+                        <td><?php echo $participant['total_score']; ?></td>
+                    </tr>
+                    <?php
+                    $rank++;
+                    endforeach;
+                    if (empty($participants)) {
+                        echo '<tr><td colspan="3" class="text-center">No participants found.</td></tr>';
+                    }
+                    ?>
+                </tbody>
+            </table>
+            <small class="text-muted">Page auto-refreshes every 10 seconds.</small>
         </div>
     </div>
 </body>
