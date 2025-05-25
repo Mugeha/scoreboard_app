@@ -91,6 +91,21 @@ DB_NAME=scoreboard_app
 
 ---
 
+## Folder structure
+
+scoreboard_app/
+│
+├── .env                  # Environment variables
+├── admin.php             # Admin landing page
+├── admin_panel.php       # Admin - Add judges
+├── add_participant.php   # Admin - Add participants
+├── judge_portal.php      # Judge scoring interface
+├── scoreboard.php        # Public scoreboard
+├── assets/               # (Optional) Folder for images, styles, etc.
+└── README.md             # Project documentation
+
+---
+
 ## Run the application
 
 - Access the Admin Panel: http://localhost/scoreboard_app/admin_panel.php
@@ -123,7 +138,7 @@ DB_NAME=scoreboard_app
 
 ---
 
-### Future improvements
+## Future improvements
 
 - Add user authentication and role-based access control.
 
