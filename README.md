@@ -9,6 +9,12 @@ This is a simple LAMP stack web application designed for a competition scoring s
 
 ---
 
+## Demo
+
+🎥 Watch a walkthrough of the project: [Loom Video Link](https://loom.com/share/your-video-id)
+
+---
+
 ## Features
 
 - Admin Panel for managing judges  
