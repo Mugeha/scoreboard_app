@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: php-scoreboard-app
+    env: docker
+    plan: free
+    region: oregon
+    envVars:
+      - key: DB_HOST
+        value: db4free.net
+      - key: DB_USER
+        value: appuser
+      - key: DB_PASSWORD
+        value: jackie1428
+      - key: DB_NAME
+        value: scoreboard_app
