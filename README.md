@@ -38,21 +38,21 @@ git clone https://github.com/yourusername/scoreboard_app.git
 cd scoreboard_app
 ```
 ## Create the database and tables
-CREATE DATABASE scoreboard_app;
-USE scoreboard_app;
+- CREATE DATABASE scoreboard_app;
+- USE scoreboard_app;
 
-CREATE TABLE judges (
+- CREATE TABLE judges (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) UNIQUE NOT NULL,
     display_name VARCHAR(100) NOT NULL
 );
 
-CREATE TABLE participants (
+- CREATE TABLE participants (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL
 );
 
-CREATE TABLE scores (
+- CREATE TABLE scores (
     id INT AUTO_INCREMENT PRIMARY KEY,
     judge_id INT NOT NULL,
     participant_id INT NOT NULL,
