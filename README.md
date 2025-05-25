@@ -15,6 +15,10 @@ This is a simple LAMP stack web application designed for a competition scoring s
 
 ---
 
+### 🌍 Live Demo
+Access the live scoreboard app: [https://scoreboard-app.onrender.com](https://scoreboard-app.onrender.com)
+
+
 ## Features
 
 - Admin Panel for managing judges  
