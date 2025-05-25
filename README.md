@@ -81,10 +81,10 @@ CREATE TABLE scores (
 
 ```bash
 
-DB_HOST=localhost
-DB_USER=appuser
-DB_PASS=your_secure_password
-DB_NAME=scoreboard_app
+DB_HOST=your-host
+DB_USER=your-username
+DB_PASS=your-password
+DB_NAME=your-db-name
 ```
 - Update db.php to read from .env and connect to the database securely
 
