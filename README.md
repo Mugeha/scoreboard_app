@@ -117,6 +117,18 @@ DB_NAME=scoreboard_app
 
 ---
 
+## Screenshots
+
+### Admin Panel
+![Admin Panel Screenshot](assets/screenshots/admin_panel.png)
+
+### Judge Portal
+![Judge Portal Screenshot](assets/screenshots/judge_portal.png)
+
+### Public Scoreboard
+![Scoreboard Screenshot](assets/screenshots/scoreboard.png)
+
+
 ## Assumptions
 
 - User authentication is out of scope for this demo.
