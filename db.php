@@ -12,9 +12,10 @@ $host = $_ENV['DB_HOST'] ?? getenv('DB_HOST');
 $user = $_ENV['DB_USER'] ?? getenv('DB_USER');
 $pass = $_ENV['DB_PASS'] ?? getenv('DB_PASS');
 $db   = $_ENV['DB_NAME'] ?? getenv('DB_NAME');
+$port = $_ENV['DB_PORT'] ?? getenv('DB_PORT');
 
 // Connect to the database
-$conn = new mysqli($host, $user, $pass, $db);
+$conn = new mysqli($host, $user, $pass, $db, $port);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
