@@ -1,22 +1,18 @@
 <?php
-require_once __DIR__ . '/vendor/autoload.php';
+$host = getenv('DB_HOST');
+$username = getenv('DB_USER');
+$password = getenv('DB_PASSWORD');
+$database = getenv('DB_NAME');
+$port = getenv('DB_PORT');
 
-// Load .env only if running locally and file exists
-if (file_exists(__DIR__ . '/.env')) {
-    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-    $dotenv->load();
-}
+// Set up SSL context (TiDB requires secure connection)
+$mysqli = mysqli_init();
+$mysqli->ssl_set(null, null, null, null, null); // Enables default SSL
 
-// Now access environment variables safely
-$host = $_ENV['DB_HOST'] ?? getenv('DB_HOST');
-$user = $_ENV['DB_USER'] ?? getenv('DB_USER');
-$pass = $_ENV['DB_PASS'] ?? getenv('DB_PASS');
-$db   = $_ENV['DB_NAME'] ?? getenv('DB_NAME');
-$port = $_ENV['DB_PORT'] ?? getenv('DB_PORT');
+// Connect with SSL
+$mysqli->real_connect($host, $username, $password, $database, (int)$port, null, MYSQLI_CLIENT_SSL);
 
-// Connect to the database
-$conn = new mysqli($host, $user, $pass, $db, $port);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+if ($mysqli->connect_errno) {
+    die("Connection failed: " . $mysqli->connect_error);
 }
 ?>
