@@ -181,7 +181,7 @@ DB_NAME=your-db-name
 
 I wrote a blog post about the development process and technical decisions behind this project:
 
-👉 [Read the blog here](https://yourblog.com/your-post)
+👉 [Read the blog here](https://yourblog.com/your-post](https://mugeha585.hashnode.dev/building-a-live-scoreboard-web-app-with-lamp-stack-and-tidb)
 
 ---
 
