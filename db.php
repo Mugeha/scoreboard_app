@@ -15,4 +15,7 @@ $mysqli->real_connect($host, $username, $password, $database, (int)$port, null, 
 if ($mysqli->connect_errno) {
     die("Connection failed: " . $mysqli->connect_error);
 }
+
+// ✅ Make it accessible as $conn for other files
+$conn = $mysqli;
 ?>
