@@ -11,7 +11,7 @@ This is a simple LAMP stack web application designed for a competition scoring s
 
 ## Demo
 
-🎥 Watch a walkthrough of the project: https://www.loom.com/share/a6fe92df4c4d4218bf5f76a737154015?sid=5e3d58f6-ecc4-4ef5-b151-fbda332faf62
+🎥 Watch a walkthrough of the project: [Watch loom video walkthrough](https://www.loom.com/share/a6fe92df4c4d4218bf5f76a737154015?sid=5e3d58f6-ecc4-4ef5-b151-fbda332faf62)
 
 ---
 
